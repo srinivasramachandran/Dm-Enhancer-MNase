@@ -2,7 +2,7 @@
 
 die "Usage: perl peak-caller.pl <Short WIG> <Log2(Short/Nuc) WIG> <BED OUT>\n" if(!$ARGV[2]);
 
-BEGIN { push @INC, '/home/sramacha/perl_library' }
+BEGIN { push @INC, 'lib' }
 use ngs;
 
 ($tMseq,$tMarr) = &ngs::readwigArray($ARGV[0]);
