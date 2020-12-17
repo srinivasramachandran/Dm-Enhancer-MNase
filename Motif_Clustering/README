@@ -1,0 +1,10 @@
+Files:
+tomtom_all_vs_all.txt - Tomtom output comparing all motifs in Fly Factor Survey and JASPAR
+JASPAR_FFS.meme - JASPAR and Fly Factor Survey motifs
+Cluster_tomtom.Rmd - R code to cluster the motifs
+Clusters_42 - File with cluster IDs for each motif
+plt_42.pdf  - Plot of the clusters
+
+
+Tomtom command used:
+tomtom -dist kullback -motif-pseudo 0.1 -text -min-overlap 1 JASPAR_FFS.meme JASPAR_FFS.meme > tomtom_all_vs_all.txt

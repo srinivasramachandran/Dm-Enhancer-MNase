@@ -1,0 +1,43 @@
+---
+title: "Clustering_tomtom"
+author: "Srinivas Ramachandran"
+date: "11/10/2020"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+tomtom_results <- read.csv(file='tomtom_all_vs_all.txt',sep='\t')
+```
+
+
+```{r}
+library(tidyverse)
+```
+
+```{r}
+temp <- data.frame(Query_ID=tomtom_results$Query_ID,Target_ID=tomtom_results$Target_ID,Score=40+log10(tomtom_results$E.value+10^-40))
+tomtom_mat <- spread(temp,key='Target_ID',value='Score',fill = 50)
+tomtom_dist <- as.dist(tomtom_mat[,2:ncol(tomtom_mat)])
+out_clust <- hclust(tomtom_dist,method='average')
+```
+
+
+
+```{r}
+a=42
+pdf(paste0("plt_",a,".pdf"), width=150, height=20)
+plot(out_clust)
+rect.hclust(out_clust , h=a, border = 2:6)
+abline(h = a, col = 'red')
+dev.off()
+
+cut_cl <- cutree(out_clust, h=a)
+
+write.table(data.frame(Motif=tomtom_mat$Query_ID,Cluster_ID=cut_cl),file=paste0('Clusters_',a),row.names = F,col.names = T,quote = F)
+
+```
+
